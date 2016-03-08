@@ -1,0 +1,519 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>5.&nbsp;IoC &#23481;&#22120;</title><link rel="stylesheet" type="text/css" href="css/manual-multipage.css"><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"><link rel="home" href="index.html" title="Spring Framework Reference Documentation"><link rel="up" href="spring-core.html" title="Part&nbsp;III.&nbsp;&#26680;&#24515;&#25216;&#26415;"><link rel="prev" href="spring-core.html" title="Part&nbsp;III.&nbsp;&#26680;&#24515;&#25216;&#26415;"><link rel="next" href="resources.html" title="6.&nbsp;Resources"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+
+
+<!-- Copyright � 2005. Spidersoft Ltd -->
+<style>
+A.applink:hover {border: 2px dotted #DCE6F4;padding:2px;background-color:#ffff00;color:green;text-decoration:none}
+A.applink       {border: 2px dotted #DCE6F4;padding:2px;color:#2F5BFF;background:transparent;text-decoration:none}
+A.info          {color:#2F5BFF;background:transparent;text-decoration:none}
+A.info:hover    {color:green;background:transparent;text-decoration:underline}
+</style>
+<!-- <div style='BORDER: 1px solid #DCE6F4; MARGIN-TOP: 20px; MARGIN-BOTTOM: 20px; MARGIN-LEFT: 5px; MARGIN-RIGHT: 5px; PADDING: 5px; BACKGROUND-COLOR: #eef8ff;line-height:180%; COLOR: #000000; font-family: Arial; font-size: 8pt; width=100%; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr="#FFFFFFFF", EndColorStr="#F2F5FAFF");'>
+This page was saved using <a class="applink" href="http://www.spidersoft.com"><b>WebZIP 7.0.3.1030</b></a> <a class="applink" href="http://www.spidersoft.com"><b>offline browser</b></a>  (Unregistered) on  07/15/15 15:58:57.<br>
+<b>Address:</b> <a class="info" href="http://itmyhome.com/spring/beans.html">http://itmyhome.com/spring/beans.html</a><br>
+<b>Title:</b> 5.&nbsp;IoC &#23481;&#22120; &nbsp;&bull;&nbsp; <b>Size:</b> 587259 &nbsp;&bull;&nbsp; <b>Last Modified:</b> Sat, 11 Apr 2015 20:39:16 GMT<br></div>
+<!-- /Copyright � 2005. Spidersoft Ltd -->
+
+<div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">5.&nbsp;IoC &#23481;&#22120;</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="spring-core.html">Prev</a>&nbsp;</td><th width="60%" align="center">Part&nbsp;III.&nbsp;&#26680;&#24515;&#25216;&#26415;</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="resources.html">Next</a></td></tr></table><hr></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a name="beans" href="#beans"></a>5.&nbsp;IoC &#23481;&#22120;</h2></div></div></div>
+
+<div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="beans-introduction" href="#beans-introduction"></a>5.1&nbsp;Spring IoC&#23481;&#22120;&#21644;Bean&#27010;&#36848;</h2></div></div></div>
+
+<p>&#26412;&#31456;&#20171;&#32461;&#20102;Spring&#26694;&#26550;&#23454;&#29616;&#25511;&#21046;&#21453;&#36716;&#65288;IoC&#65289; <a href="#ftn.d5e958" class="footnote" name="d5e958"><sup class="footnote">[1]</sup></a> &#30340;&#21407;&#29702;&#12290;IoC&#20063;&#34987;&#31216;&#20316; <span class="emphasis"><em>&#20381;&#36182;&#27880;&#20837;</em></span> (DI)&#12290;&#23427;&#26159;&#19968;&#20010;&#22788;&#29702;&#23545;&#35937;&#20381;&#36182;&#39033;&#30340;&#36807;&#31243;&#65292;&#20063;&#23601;&#26159;&#35828;&#65292;&#21644;&#20182;&#20204;&#19968;&#36215;&#24037;&#20316;&#30340;&#20854;&#20182;&#30340;&#23545;&#35937;&#65292;&#21482;&#26377;&#36890;&#36807;&#26500;&#36896;&#21442;&#25968;&#12289;&#24037;&#21378;&#26041;&#27861;&#21442;&#25968;&#25110;&#32773;&#65288;&#23646;&#24615;&#27880;&#20837;&#65289;&#36890;&#36807;&#26500;&#36896;&#21442;&#25968;&#23454;&#20363;&#21270;&#25110;&#36890;&#36807;&#24037;&#21378;&#26041;&#27861;&#36820;&#22238;&#23545;&#35937;&#21518;&#20877;&#35774;&#32622;&#23646;&#24615;&#12290;&#24403;&#21019;&#24314;bean&#21518;&#65292;IoC&#23481;&#22120;&#20877;&#23558;&#36825;&#20123;&#20381;&#36182;&#39033;&#27880;&#20837;&#36827;&#21435;&#12290;&#36825;&#20010;&#36807;&#31243;&#22522;&#26412;&#19978;&#26159;&#21453;&#36716;&#30340;&#65292;&#22240;&#27492;&#24471;&#21517; <span class="emphasis"><em>&#25511;&#21046;&#21453;&#36716;</em></span> &#65288;IoC&#65289;&#65292;
+This process is fundamentally
+the inverse, hence the name <span class="emphasis"><em>Inversion of Control</em></span> (IoC), of the bean itself
+controlling the instantiation or location of its dependencies by using direct
+construction of classes, or a mechanism such as the <span class="emphasis"><em>Service Locator</em></span> pattern.</p>
+<p><code class="literal">org.springframework.beans</code>&#21644;<code class="literal">org.springframework.context</code>&#21253;&#26159;Spring&#26694;&#26550;IoC&#23481;&#22120;&#30340;&#22522;&#30784;&#12290;
+<a class="ulink" href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/beans/factory/BeanFactory.html" target="_top"><code class="literal">BeanFactory</code></a>&#25509;&#21475;&#25552;&#20379;&#20102;&#19968;&#20010;&#20808;&#36827;&#30340;&#37197;&#32622;&#26426;&#21046;&#33021;&#22815;&#31649;&#29702;&#20219;&#20309;&#31867;&#22411;&#30340;&#23545;&#35937;&#12290;
+<a class="ulink" href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/ApplicationContext.html" target="_top"><code class="literal">ApplicationContext</code>(&#24212;&#29992;&#19978;&#19979;&#25991;)</a> &#26159;<code class="literal">BeanFactory</code>&#30340;&#19968;&#20010;&#23376;&#25509;&#21475;&#12290;&#23427;&#22686;&#21152;&#20102;&#26356;&#26041;&#20415;&#30340;&#38598;&#25104;Spring&#30340;AOP&#21151;&#33021;&#12289;&#28040;&#24687;&#36164;&#28304;&#22788;&#29702;&#65288;&#20351;&#29992;&#22269;&#38469;&#21270;&#65289;&#12289;&#20107;&#20214;&#21457;&#24067;&#21644;&#29305;&#23450;&#30340;&#24212;&#29992;&#23618;&#65292;&#22914;&#22312;web&#24212;&#29992;&#23618;&#20013;&#20351;&#29992;&#30340;<code class="literal">WebApplicationContext</code>&#12290;</p>
+<p>&#24635;&#20043;&#65292;<code class="literal">BeanFactory</code>&#25552;&#20379;&#20102;&#37197;&#32622;&#26694;&#26550;&#21644;&#22522;&#26412;&#21151;&#33021;&#65292;<code class="literal">ApplicationContext</code>&#21017;&#28155;&#21152;&#20102;&#26356;&#22810;&#30340;&#20225;&#19994;&#29305;&#23450;&#30340;&#21151;&#33021;&#12290;<code class="literal">ApplicationContext</code>&#26159;<code class="literal">BeanFactory</code>&#30340;&#19968;&#20010;&#23436;&#25972;&#30340;&#36229;&#38598;&#65292;&#24182;&#19988;&#22312;&#26412;&#31456;&#19987;&#38376;&#29992;&#20110;&#25351;&#20195;Spring&#23481;&#22120;&#12290;&#20851;&#20110;&#26356;&#22810;&#20351;&#29992;<code class="literal">BeanFactory</code>&#26367;&#20195;<code class="literal">ApplicationContext</code>&#30340;&#20449;&#24687;&#65292;&#21442;&#32771;<a class="xref" href="http://itmyhome.com/spring/beans.html#beans-beanfactory" title="5.16&nbsp;The BeanFactory">Section&nbsp;5.16, &#8220;The BeanFactory&#8221;</a>&#12290;</p>
+<p>&#22312;Spring&#20013;&#65292;&#34987;Spring IoC <span class="emphasis"><em>&#23481;&#22120;</em></span> &#31649;&#29702;&#30340;&#36825;&#20123;&#26469;&#33258;&#20110;&#24212;&#29992;&#20027;&#24178;&#30340;&#36825;&#20123;&#23545;&#35937;&#31216;&#20316; <span class="emphasis"><em>beans</em></span> &#12290;bean&#26159;&#19968;&#20010;&#30001;Spring IoC&#23481;&#22120;&#36827;&#34892;&#23454;&#20363;&#21270;&#12289;&#35013;&#37197;&#21644;&#31649;&#29702;&#30340;&#23545;&#35937;&#12290;&#27492;&#22806;&#65292;bean&#21482;&#26159;&#20320;&#24212;&#29992;&#20013;&#35768;&#22810;&#23545;&#35937;&#20013;&#30340;&#19968;&#20010;&#12290;Beans&#20197;&#21450;&#20182;&#20204;&#20043;&#38388;&#30340; <span class="emphasis"><em>&#20381;&#36182;&#20851;&#31995;</em></span> &#26159;&#36890;&#36807;&#23481;&#22120;&#20351;&#29992; <span class="emphasis"><em>&#37197;&#32622;&#20803;&#25968;&#25454;</em></span> &#21453;&#24212;&#20986;&#26469;&#12290;</p>
+</div>
+<div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="beans-basics" href="#beans-basics"></a>5.2&nbsp;&#23481;&#22120;&#27010;&#36848;</h2></div></div></div>
+
+<p><code class="literal">org.springframework.context.ApplicationContext</code>&#25509;&#21475;&#20195;&#34920;&#20102;Spring
+IoC&#23481;&#22120;&#65292;&#24182;&#19988;&#36127;&#36131;&#19978;&#38754;&#25552;&#21040;&#30340;Beans&#30340;&#23454;&#20363;&#21270;&#12289;&#37197;&#32622;&#21644;&#35013;&#37197;&#12290;&#23481;&#22120;&#36890;&#36807;&#35835;&#21462;&#37197;&#32622;&#20803;&#25968;&#25454;&#33719;&#21462;&#23545;&#35937;&#22914;&#20309;&#23454;&#20363;&#21270;&#12289;&#37197;&#32622;&#21644;&#35013;&#37197;&#30340;&#25351;&#31034;&#12290;&#37197;&#32622;&#20803;&#25968;&#25454;&#21487;&#20197;&#29992;XML&#12289;Java&#27880;&#35299;&#25110;Java&#20195;&#30721;&#26469;&#25551;&#36848;&#12290;&#23427;&#20801;&#35768;&#20320;&#34920;&#31034;&#32452;&#25104;&#20320;&#24212;&#29992;&#30340;&#23545;&#35937;&#65292;&#20197;&#21450;&#23545;&#35937;&#38388;&#20016;&#23500;&#30340;&#20381;&#36182;&#20851;&#31995;&#12290;</p>
+<p>Spring&#25552;&#20379;&#20102;&#20960;&#20010;&#24320;&#31665;&#21363;&#29992;&#30340;<code class="literal">ApplicationContext</code>&#25509;&#21475;&#30340;&#23454;&#29616;&#12290;&#22312;&#29420;&#31435;&#30340;&#24212;&#29992;&#31243;&#24207;&#20013;&#65292;&#36890;&#24120;&#21019;&#24314;
+<a class="ulink" href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/support/ClassPathXmlApplicationContext.html" target="_top"><code class="literal">ClassPathXmlApplicationContext</code></a>
+&#25110;
+<a class="ulink" href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/support/FileSystemXmlApplicationContexthttp:/docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/support/FileSystemXmlApplicationContext.html" target="_top"><code class="literal">FileSystemXmlApplicationContext</code></a>&#30340;&#23454;&#20363;&#12290;
+&#34429;&#28982;XML&#26159;&#23450;&#20041;&#37197;&#32622;&#20803;&#25968;&#25454;&#30340;&#20256;&#32479;&#26684;&#24335;&#65292;&#20294;&#26159;&#20320;&#21487;&#20197;&#25351;&#31034;&#23481;&#22120;&#20351;&#29992;Java&#27880;&#35299;&#25110;&#32773;&#20195;&#30721;&#20316;&#20026;&#20803;&#25968;&#25454;&#26684;&#24335;&#65292;&#20320;&#38656;&#35201;&#36890;&#36807;&#25552;&#20379;&#23569;&#37327;XML&#37197;&#32622;&#22768;&#26126;&#25903;&#25345;&#36825;&#20123;&#39069;&#22806;&#30340;&#20803;&#25968;&#25454;&#26684;&#24335;&#12290;</p>
+<p>&#22312;&#22823;&#22810;&#25968;&#30340;&#24212;&#29992;&#22330;&#26223;&#65292;&#19981;&#38656;&#35201;&#26174;&#24335;&#30340;&#20195;&#30721;&#26469;&#23454;&#20363;&#21270;&#19968;&#20010;&#25110;&#22810;&#20010;Spring IoC&#23481;&#22120;&#12290;&#20363;&#23376;&#65292;&#22312;wei&#24212;&#29992;&#20013;&#65292;&#22312;&#24212;&#29992;&#30340;<code class="literal">web.xml</code>&#25991;&#20214;&#20013;&#65292;&#31616;&#21333;&#30340;8&#34892;&#26679;&#26495;&#24335;&#30340;xml&#37197;&#32622;&#25991;&#20214;&#23601;&#36275;&#22815;&#20102;&#12290;&#22914;&#26524;&#20320;&#20351;&#29992; <a class="ulink" href="https://spring.io/tools/sts" target="_top">Spring Tool Suite</a> &#30340;Eclipse&#24320;&#21457;&#29615;&#22659;&#65292;&#20320;&#21482;&#38656;&#35201;&#28857;&#20960;&#19979;&#40736;&#26631;&#25110;&#32773;&#38190;&#30424;&#23601;&#21487;&#20197;&#36731;&#26494;&#30340;&#21019;&#24314;&#36825;&#20010;&#37197;&#32622;&#12290;</p>
+<p>&#19979;&#38754;&#30340;&#22270;&#34920;&#26159;&#19968;&#20010;Spring&#24037;&#20316;&#30340;&#39640;&#32423;&#21035;&#35270;&#22270;&#12290;&#20320;&#30340;&#24212;&#29992;&#31243;&#24207;&#31867;&#37117;&#36890;&#36807;&#37197;&#32622;&#20803;&#25968;&#25454;&#36827;&#34892;&#20851;&#32852;&#65292;&#25152;&#20197;&#22312;<code class="literal">ApplicationContext</code>&#21019;&#24314;&#21644;&#21021;&#22987;&#21270;&#21518;&#65292;&#20320;&#23601;&#26377;&#20102;&#19968;&#20010;&#23436;&#20840;&#37197;&#32622;&#21644;&#21487;&#25191;&#34892;&#30340;&#31995;&#32479;&#25110;&#24212;&#29992;&#31243;&#24207;&#12290;</p>
+<div class="figure"><a name="d5e1002" href="#d5e1002"></a><p class="title"><b>Figure&nbsp;5.1.&nbsp;Spring IoC&#23481;&#22120;</b></p><div class="figure-contents">
+
+  <div class="mediaobject"><img src="images/container-magic.png" alt="container magic"></div>
+</div></div><br class="figure-break">
+
+<div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="beans-factory-metadata" href="#beans-factory-metadata"></a>5.2.1&nbsp;&#37197;&#32622;&#20803;&#25968;&#25454;</h3></div></div></div>
+
+<p>&#22914;&#19978;&#22270;&#25152;&#31034;&#65292;Spring IoC&#23481;&#22120;&#20351;&#29992;&#20102;&#19968;&#31181; <span class="emphasis"><em>&#37197;&#32622;&#20803;&#25968;&#25454;</em></span> &#30340;&#24418;&#24335;&#65292;&#36825;&#20123;&#37197;&#32622;&#20803;&#25968;&#25454;&#20195;&#34920;&#20102;&#20320;&#20316;&#20026;&#19968;&#20010;&#24212;&#29992;&#24320;&#21457;&#32773;&#21578;&#35785;Spring&#23481;&#22120;&#22914;&#20309;&#21435;&#23454;&#20363;&#21270;&#12289;&#37197;&#32622;&#21644;&#35013;&#22791;&#20320;&#24212;&#29992;&#20013;&#30340;&#23545;&#35937;&#12290;</p>
+<p>&#37197;&#32622;&#20803;&#25968;&#25454;&#36890;&#24120;&#20351;&#29992;&#19968;&#20010;&#31616;&#21333;&#21644;&#30452;&#35266;&#30340;XML&#26684;&#24335;&#65292;&#26412;&#31456;&#22823;&#37096;&#20998;&#37117;&#20351;&#29992;&#36825;&#31181;&#26684;&#24335;&#26469;&#34920;&#36798;Spring IoC&#23481;&#22120;&#27010;&#24565;&#21644;&#29305;&#24615;&#12290;</p>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
+<p>&#22522;&#20110;XML&#37197;&#32622;&#30340;&#20803;&#25968;&#25454; <span class="emphasis"><em>&#19981;&#26159;</em></span> &#21807;&#19968;&#20801;&#35768;&#29992;&#26469;&#37197;&#32622;&#20803;&#25968;&#25454;&#30340;&#19968;&#31181;&#24418;&#24335;&#12290;Spring IoC&#23481;&#22120;&#26412;&#36523;&#26159; <span class="emphasis"><em>&#23436;&#20840;</em></span> &#21644;&#20803;&#25968;&#25454;&#37197;&#32622;&#20070;&#20889;&#30340;&#24418;&#24335;&#35299;&#32806;&#30340;&#12290;&#36825;&#20123;&#22825;&#65292;&#35768;&#22810;&#24320;&#21457;&#32773;&#22312;&#20182;&#20204;&#30340;Spring&#24212;&#29992;&#20013;&#36873;&#25321;&#20351;&#29992;<a class="link" href="http://itmyhome.com/spring/beans.html#beans-java" title="5.12&nbsp;Java-based container configuration">&#22522;&#20110;Java&#30340;&#37197;&#32622;</a>&#30340;&#20803;&#25968;&#25454;&#24418;&#24335;&#12290;</p>
+</td></tr></table></div>
+
+<p>&#26356;&#22810;&#26377;&#20851;&#22312;Spring&#23481;&#22120;&#20013;&#20351;&#29992;&#20854;&#20182;&#24418;&#24335;&#30340;&#20803;&#25968;&#25454;&#30340;&#20869;&#23481;&#65292;&#35831;&#26597;&#38405;&#65306;</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<a class="link" href="http://itmyhome.com/spring/beans.html#beans-annotation-config" title="5.9&nbsp;Annotation-based container configuration">&#22522;&#20110;&#27880;&#35299;&#30340;&#37197;&#32622;</a>: Spring 2.5&#24341;&#20837;&#22522;&#20110;&#27880;&#35299;&#30340;&#37197;&#32622;&#20803;&#25968;&#25454;&#12290;
+</li><li class="listitem">
+<a class="link" href="http://itmyhome.com/spring/beans.html#beans-java" title="5.12&nbsp;Java-based container configuration">&#22522;&#20110;Java&#30340;&#37197;&#32622;</a>: &#20174;Spring 3.0&#24320;&#22987;&#65292;&#30001;Spring
+JavaConfig&#25552;&#20379;&#30340;&#35768;&#22810;&#21151;&#33021;&#24050;&#32463;&#25104;&#20026;Spring&#26694;&#26550;&#30340;&#19968;&#37096;&#20998;&#12290;&#22240;&#27492;&#65292;&#20320;&#21487;&#20197;&#36890;&#36807;Java&#32780;&#19981;&#26159;XML&#25991;&#20214;&#26469;&#23450;&#20041;&#22806;&#37096;&#24212;&#29992;&#31243;&#24207;&#30340;bean&#31867;&#12290;&#20351;&#29992;&#36825;&#20123;&#26032;&#30340;&#21151;&#33021;&#65292;&#35831;&#30475;<code class="literal">@Configuration</code>&#12289;<code class="literal">@Bean</code>&#12289;<code class="literal">@Import</code>&#21644;<code class="literal">@DependsOn</code> &#27880;&#35299;&#12290;
+</li></ul></div>
+
+<p>Spring&#37197;&#32622;&#21253;&#25324;&#33267;&#23569;&#19968;&#20010;&#19988;&#36890;&#24120;&#22810;&#20010;&#30001;&#23481;&#22120;&#31649;&#29702;&#30340;bean&#23450;&#20041;&#12290;&#22312;&#22522;&#20110;XML&#37197;&#32622;&#30340;&#20803;&#25968;&#25454;&#20013;&#65292;&#36825;&#20123;beans&#37197;&#32622;&#25104;&#19968;&#20010;<code class="literal">&lt;bean/&gt;</code>&#20803;&#32032;&#65292;&#36825;&#20123;<code class="literal">&lt;bean/&gt;</code>&#20803;&#32032;&#23450;&#20041;&#22312;&#39030;&#32423;&#20803;&#32032;<code class="literal">&lt;beans/&gt;</code>&#30340;&#37324;&#38754;&#12290;&#22312;Java&#37197;&#32622;&#20013;&#36890;&#24120;&#22312;&#19968;&#20010;<code class="literal">@Configuration</code>&#27880;&#35299;&#30340;&#31867;&#20013;&#65292;&#22312;&#26041;&#27861;&#19978;&#20351;&#29992;<code class="literal">@Bean</code>&#27880;&#35299;&#12290;</p>
+<p>&#36825;&#20123;bean&#23450;&#20041;&#23545;&#24212;&#30340;&#23454;&#38469;&#23545;&#35937;&#32452;&#25104;&#20102;&#20320;&#30340;&#24212;&#29992;&#12290;&#36890;&#24120;&#20320;&#20250;&#23450;&#20041;&#26381;&#21153;&#23618;&#23545;&#35937;&#12289;&#25968;&#25454;&#35775;&#38382;&#23618;&#23545;&#35937;&#65288;DAO&#65289;&#65292;&#23637;&#29616;&#23618;&#23545;&#35937;&#22914;Struts&#30340;<code class="literal">Action</code>&#23454;&#20363;&#65292;&#24213;&#23618;&#23545;&#35937;&#22914;Hibernate&#30340;<code class="literal">SessionFactories</code>&#65292;JMS&#30340;<code class="literal">Queues</code>&#31561;&#31561;&#12290;&#19968;&#33324;&#24456;&#23569;&#20250;&#22312;&#23481;&#22120;&#20013;&#37197;&#32622;&#32454;&#31890;&#24230;&#30340;&#39046;&#22495;&#23545;&#35937;&#65292;&#22240;&#20026;&#36890;&#24120;&#26159;DAO&#21644;&#19994;&#21153;&#36923;&#36753;&#36127;&#36131;&#21019;&#24314;&#21644;&#21152;&#36733;&#39046;&#22495;&#23545;&#35937;&#12290;&#20294;&#26159;&#20320;&#21487;&#20197;&#20351;&#29992;Spring&#38598;&#25104;AspectJ&#26469;&#37197;&#32622;IoC&#23481;&#22120;&#20043;&#22806;&#21019;&#24314;&#30340;&#23545;&#35937;&#12290;&#26597;&#30475;<a class="link" href="http://itmyhome.com/spring/aop.html#aop-atconfigurable" title="9.8.1&nbsp;Using AspectJ to dependency inject domain objects with Spring">&#22312;Spring&#20013;&#20351;&#29992;AspectJ&#20381;&#36182;&#27880;&#20837;&#39046;&#22495;&#23545;&#35937;</a>&#12290;</p>
+<p>&#19979;&#38754;&#30340;&#20363;&#23376;&#28436;&#31034;&#20102;&#22522;&#20110;XML&#30340;&#37197;&#32622;&#20803;&#25968;&#25454;&#30340;&#22522;&#30784;&#32467;&#26500;&#65306;</p>
+<pre class="programlisting"><span class="hl-directive" style="color: maroon">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="hl-tag">&lt;beans</span> <span class="hl-attribute">xmlns</span>=<span class="hl-value">"http://www.springframework.org/schema/beans"</span>
+    <span class="hl-attribute">xmlns:xsi</span>=<span class="hl-value">"http://www.w3.org/2001/XMLSchema-instance"</span>
+    <span class="hl-attribute">xsi:schemaLocation</span>=<span class="hl-value">"http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd"</span><span class="hl-tag">&gt;</span>
+
+    <span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"..."</span> <span class="hl-attribute">class</span>=<span class="hl-value">"..."</span><span class="hl-tag">&gt;</span>
+        <span class="hl-comment">&lt;!-- &#22312;&#36825;&#37324;&#20889; bean &#30340;&#37197;&#32622;&#21644;&#30456;&#20851;&#24341;&#29992; --&gt;</span>
+    <span class="hl-tag">&lt;/bean&gt;</span>
+
+    <span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"..."</span> <span class="hl-attribute">class</span>=<span class="hl-value">"..."</span><span class="hl-tag">&gt;</span>
+        <span class="hl-comment">&lt;!-- &#22312;&#36825;&#37324;&#20889; bean &#30340;&#37197;&#32622;&#21644;&#30456;&#20851;&#24341;&#29992; --&gt;</span>
+    <span class="hl-tag">&lt;/bean&gt;</span>
+
+    <span class="hl-comment">&lt;!-- &#26356;&#22810;bean&#30340;&#23450;&#20041;&#20889;&#22312;&#36825;&#37324; --&gt;</span>
+
+<span class="hl-tag">&lt;/beans&gt;</span></pre>
+
+<p><code class="literal">id</code>&#23646;&#24615;&#26159;&#19968;&#20010;&#29992;&#26469;&#35782;&#21035;&#27599;&#19968;&#20010;&#29420;&#31435;bean&#23450;&#20041;&#30340;&#23383;&#31526;&#20018;&#12290;<code class="literal">class</code>&#23646;&#24615;&#23450;&#20041;&#20102;bean&#30340;&#31867;&#22411;&#65292;&#36825;&#20010;&#23646;&#24615;&#38656;&#35201;&#20351;&#29992;bean&#31867;&#30340;&#20840;&#38480;&#23450;&#21517;&#31216;&#12290;id&#23646;&#24615;&#30340;&#20540;&#21487;&#20197;&#34987;&#20854;&#20182;&#30340;bean&#23545;&#35937;&#24341;&#29992;&#12290;&#36825;&#20010;&#20363;&#23376;&#20013;&#27809;&#26377;&#24341;&#29992;&#20854;&#20182;bean&#65292;&#26597;&#30475;<a class="link" href="http://itmyhome.com/spring/beans.html#beans-dependencies" title="5.4&nbsp;&#20381;&#36182;">bean&#20381;&#36182;</a>&#33719;&#21462;&#26356;&#22810;&#20449;&#24687;&#12290;</p>
+</div>
+<div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="beans-factory-instantiation" href="#beans-factory-instantiation"></a>5.2.2&nbsp;&#23454;&#20363;&#21270;&#23481;&#22120;</h3></div></div></div>
+
+<p>&#23454;&#20363;&#21270;Spring IoC&#23481;&#22120;&#24456;&#23481;&#26131;&#12290;&#23558;&#19968;&#20010;&#25110;&#22810;&#20010;&#20301;&#32622;&#36335;&#24452;&#25552;&#20379;&#32473;<code class="literal">ApplicationContext</code>&#30340;&#26500;&#36896;&#26041;&#27861;&#23601;&#21487;&#20197;&#35753;&#23481;&#22120;&#21152;&#36733;&#37197;&#21046;&#20803;&#25968;&#25454;&#65292;&#21487;&#20197;&#20174;&#22810;&#31181;&#22806;&#37096;&#36164;&#28304;&#36827;&#34892;&#33719;&#21462;&#65292;&#20363;&#22914;&#25991;&#20214;&#31995;&#32479;&#12289;Java&#30340;<code class="literal">CLASSPATH</code>&#31561;&#31561;&#12290;</p>
+<pre class="programlisting">ApplicationContext context =
+    <span class="hl-keyword">new</span> ClassPathXmlApplicationContext(<span class="hl-keyword">new</span> String[] {<span class="hl-string">"services.xml"</span>, <span class="hl-string">"daos.xml"</span>});</pre>
+
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
+<p>&#22312;&#20320;&#20102;&#35299;Spring&#30340;IoC&#23481;&#22120;&#20043;&#21518;&#65292;&#20320;&#21487;&#33021;&#24819;&#30693;&#36947;&#26356;&#22810;&#26377;&#20851;Spring&#30340;<code class="literal">Resource</code>&#30340;&#26356;&#22810;&#20869;&#23481;&#65292;&#23427;&#30340;&#20171;&#32461;&#22312;<a class="xref" href="resources.html" title="6.&nbsp;Resources">Chapter&nbsp;6, <i>Resources</i></a>&#65292;&#23427;&#25552;&#20379;&#20102;&#19968;&#20010;&#26041;&#20415;&#30340;&#26426;&#21046;&#26469;&#35835;&#21462;URI&#20013;&#30340;InputStream&#12290;<code class="literal">Resource</code>&#36335;&#24452;&#26159;&#29992;&#26469;&#26500;&#24314;&#24212;&#29992;&#31243;&#24207;&#19978;&#19979;&#25991;&#30340;&#65292;&#35814;&#32454;&#20869;&#23481;&#35831;&#30475;<a class="xref" href="http://itmyhome.com/spring/resources.html#resources-app-ctx" title="6.7&nbsp;&#24212;&#29992;&#19978;&#19979;&#25991;&#21644;&#36164;&#28304;&#36335;&#24452;">Section&nbsp;6.7, &#8220;&#24212;&#29992;&#19978;&#19979;&#25991;&#21644;&#36164;&#28304;&#36335;&#24452;&#8221;</a>&#12290;</p>
+</td></tr></table></div>
+
+<p>&#19979;&#38754;&#30340;&#20363;&#23376;&#26159;&#26381;&#21153;&#23618;&#23545;&#35937;<code class="literal">(services.xml)</code>&#30340;&#37197;&#32622;&#25991;&#20214;&#65306;</p>
+<pre class="programlisting"><span class="hl-directive" style="color: maroon">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="hl-tag">&lt;beans</span> <span class="hl-attribute">xmlns</span>=<span class="hl-value">"http://www.springframework.org/schema/beans"</span>
+    <span class="hl-attribute">xmlns:xsi</span>=<span class="hl-value">"http://www.w3.org/2001/XMLSchema-instance"</span>
+    <span class="hl-attribute">xsi:schemaLocation</span>=<span class="hl-value">"http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd"</span><span class="hl-tag">&gt;</span>
+
+    <span class="hl-comment">&lt;!-- services --&gt;</span>
+
+    <span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"petStore"</span> <span class="hl-attribute">class</span>=<span class="hl-value">"org.springframework.samples.jpetstore.services.PetStoreServiceImpl"</span><span class="hl-tag">&gt;</span>
+        <span class="hl-tag">&lt;property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"accountDao"</span> <span class="hl-attribute">ref</span>=<span class="hl-value">"accountDao"</span><span class="hl-tag">/&gt;</span>
+        <span class="hl-tag">&lt;property</span> <span class="hl-attribute">name</span>=<span class="hl-value">"itemDao"</span> <span class="hl-attribute">ref</span>=<span class="hl-value">"itemDao"</span><span class="hl-tag">/&gt;</span>
+        <span class="hl-comment">&lt;!-- &#22312;&#36825;&#37324;&#20889;&#39069;&#22806;&#30340;bean&#30340;&#37197;&#32622;&#21644;&#30456;&#20851;&#24341;&#29992; --&gt;</span>
+    <span class="hl-tag">&lt;/bean&gt;</span>
+
+    <span class="hl-comment">&lt;!-- &#26356;&#22810;Service&#23618;&#30340;bean&#23450;&#20041;&#20889;&#22312;&#36825;&#37324; --&gt;</span>
+
+<span class="hl-tag">&lt;/beans&gt;</span></pre>
+
+<p>&#19979;&#38754;&#30340;&#20363;&#23376;&#26159;&#25968;&#25454;&#35775;&#38382;&#23618;<code class="literal">daos.xml</code>&#25991;&#20214;:</p>
+<pre class="programlisting"><span class="hl-directive" style="color: maroon">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="hl-tag">&lt;beans</span> <span class="hl-attribute">xmlns</span>=<span class="hl-value">"http://www.springframework.org/schema/beans"</span>
+    <span class="hl-attribute">xmlns:xsi</span>=<span class="hl-value">"http://www.w3.org/2001/XMLSchema-instance"</span>
+    <span class="hl-attribute">xsi:schemaLocation</span>=<span class="hl-value">"http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd"</span><span class="hl-tag">&gt;</span>
+
+    <span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"accountDao"</span>
+        <span class="hl-attribute">class</span>=<span class="hl-value">"org.springframework.samples.jpetstore.dao.jpa.JpaAccountDao"</span><span class="hl-tag">&gt;</span>
+        <span class="hl-comment">&lt;!-- &#22312;&#36825;&#37324;&#20889;&#39069;&#22806;&#30340;bean&#30340;&#37197;&#32622;&#21644;&#30456;&#20851;&#24341;&#29992; --&gt;</span>
+    <span class="hl-tag">&lt;/bean&gt;</span>
+
+    <span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"itemDao"</span> <span class="hl-attribute">class</span>=<span class="hl-value">"org.springframework.samples.jpetstore.dao.jpa.JpaItemDao"</span><span class="hl-tag">&gt;</span>
+        <span class="hl-comment">&lt;!-- &#22312;&#36825;&#37324;&#20889;&#39069;&#22806;&#30340;bean&#30340;&#37197;&#32622;&#21644;&#30456;&#20851;&#24341;&#29992; --&gt;</span>
+    <span class="hl-tag">&lt;/bean&gt;</span>
+
+    <span class="hl-comment">&lt;!-- &#26356;&#22810;&#25968;&#25454;&#35775;&#38382;&#23618;&#30340;bean&#23450;&#20041;&#20889;&#22312;&#36825;&#37324; --&gt;</span>
+
+<span class="hl-tag">&lt;/beans&gt;</span></pre>
+
+<p>&#22312;&#19978;&#38754;&#30340;&#20363;&#23376;&#20013;&#65292;&#26381;&#21153;&#23618;&#21253;&#21547;&#20102;<code class="literal">PetStoreServiceImpl</code>&#31867;&#21644;&#20004;&#20010;&#31867;&#22411;&#20026;<code class="literal">JpaAccountDao</code>&#21644;<code class="literal">JpaItemDao</code>&#65288;&#22522;&#20110;JPA&#23545;&#35937;/&#20851;&#31995;&#26144;&#23556;&#26631;&#20934;&#65289;&#30340;&#25968;&#25454;&#35775;&#38382;&#23545;&#35937;&#12290;<code class="literal">property name</code>&#20803;&#32032;&#25351;&#20195;JavaBean&#23646;&#24615;&#30340;&#21517;&#31216;&#65292;<code class="literal">ref</code>&#20803;&#32032;&#24341;&#29992;&#20102;&#21478;&#19968;&#20010;bean&#23450;&#20041;&#30340;&#21517;&#31216;&#12290;<code class="literal">id</code>&#21644;<code class="literal">ref</code>&#30452;&#25509;&#30340;&#36825;&#31181;&#20851;&#31995;&#34920;&#36798;&#20986;&#20102;&#36825;&#20004;&#20010;&#21512;&#20316;&#23545;&#35937;&#38388;&#30340;&#20381;&#36182;&#20851;&#31995;&#12290;&#37197;&#32622;&#23545;&#35937;&#30452;&#25509;&#20381;&#36182;&#20851;&#31995;&#30340;&#35814;&#32454;&#20449;&#24687;&#65292;&#35831;&#21442;&#35265;<a class="link" href="http://itmyhome.com/spring/beans.html#beans-dependencies" title="5.4&nbsp;&#20381;&#36182;">&#20381;&#36182;&#20851;&#31995;</a>&#12290;</p>
+<div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="beans-factory-xml-import" href="#beans-factory-xml-import"></a>&#32534;&#20889;&#22522;&#20110;XML&#30340;&#37197;&#32622;&#20803;&#25968;&#25454;</h4></div></div></div>
+
+<p>bean&#23450;&#20041;&#21487;&#20197;&#36328;&#36234;&#22810;&#20010;XML&#25991;&#20214;&#26159;&#38750;&#24120;&#26377;&#29992;&#30340;&#12290;&#36890;&#24120;&#27599;&#20010;&#29420;&#31435;&#30340;XML&#37197;&#32622;&#25991;&#20214;&#34920;&#31034;&#19968;&#20010;&#36923;&#36753;&#23618;&#25110;&#32773;&#26159;&#20320;&#26550;&#26500;&#20013;&#30340;&#19968;&#20010;&#27169;&#22359;&#12290;</p>
+<p>&#20320;&#21487;&#20197;&#20351;&#29992;&#24212;&#29992;&#19978;&#19979;&#25991;&#30340;&#26500;&#36896;&#26041;&#27861;&#20174;&#22810;&#20010;XML&#29255;&#27573;&#20013;&#21152;&#36733;bean&#30340;&#23450;&#20041;&#12290;&#20687;&#19978;&#38754;&#20363;&#23376;&#20013;&#20986;&#29616;&#36807;&#30340;&#19968;&#26679;&#65292;&#26500;&#36896;&#26041;&#27861;&#21487;&#20197;&#25509;&#25910;&#22810;&#20010;<code class="literal">Resource</code>&#20301;&#32622;&#12290;&#25110;&#32773;&#21487;&#20197;&#22312;bean&#23450;&#20041;&#20013;&#20351;&#29992;&#19968;&#20010;&#25110;&#22810;&#20010;<code class="literal">&lt;import/&gt;</code>&#20174;&#20854;&#20182;&#30340;&#37197;&#32622;&#25991;&#20214;&#24341;&#20837;bean&#23450;&#20041;&#12290;&#20363;&#22914;&#65306;</p>
+<pre class="programlisting"><span class="hl-tag">&lt;beans&gt;</span>
+    <span class="hl-tag">&lt;import</span> <span class="hl-attribute">resource</span>=<span class="hl-value">"services.xml"</span><span class="hl-tag">/&gt;</span>
+    <span class="hl-tag">&lt;import</span> <span class="hl-attribute">resource</span>=<span class="hl-value">"resources/messageSource.xml"</span><span class="hl-tag">/&gt;</span>
+    <span class="hl-tag">&lt;import</span> <span class="hl-attribute">resource</span>=<span class="hl-value">"/resources/themeSource.xml"</span><span class="hl-tag">/&gt;</span>
+
+    <span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"bean1"</span> <span class="hl-attribute">class</span>=<span class="hl-value">"..."</span><span class="hl-tag">/&gt;</span>
+    <span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"bean2"</span> <span class="hl-attribute">class</span>=<span class="hl-value">"..."</span><span class="hl-tag">/&gt;</span>
+<span class="hl-tag">&lt;/beans&gt;</span></pre>
+
+<p>&#19978;&#38754;&#30340;&#20363;&#23376;&#20013;&#65292;&#22806;&#37096;&#30340;bean&#23450;&#20041;&#20174;<code class="literal">services.xml</code>&#12289;<code class="literal">messageSource.xml</code>&#21644;<code class="literal">themeSource.xml</code>&#36825;&#19977;&#20010;&#25991;&#20214;&#20013;&#21152;&#36733;&#12290;&#25152;&#26377;&#30340;&#20301;&#32622;&#36335;&#24452;&#37117;&#26159;&#30456;&#23545;&#20110;&#23450;&#20041;&#25191;&#34892;&#23548;&#20837;&#30340;&#25991;&#20214;&#65292;&#25152;&#20197; <code class="literal">services.xml</code>&#24517;&#39035;&#21644;&#24403;&#21069;&#23450;&#20041;&#23548;&#20837;&#30340;&#25991;&#20214;&#22312;&#30456;&#21516;&#30340;&#36335;&#24452;&#19979;&#12290;&#32780;<code class="literal">messageSource.xml</code>&#21644;<code class="literal">themeSource.xml</code>&#24517;&#39035;&#22312;&#24403;&#21069;&#23450;&#20041;&#23548;&#20837;&#30340;&#25991;&#20214;&#36335;&#24452;&#19979;&#30340;<code class="literal">resources</code>&#36335;&#24452;&#19979;&#12290;&#20320;&#21487;&#20197;&#30475;&#21040;&#65292;&#36825;&#37324;&#24573;&#30053;&#20102;&#21453;&#26012;&#26464;&#65292;&#30001;&#20110;&#36825;&#37324;&#30340;&#36335;&#24452;&#26159;&#30456;&#23545;&#30340;&#65292;&#22240;&#27492;&#24314;&#35758; <span class="strong"><strong>&#19981;&#20351;&#29992;&#21453;&#26012;&#26464;</strong></span>&#12290;&#36825;&#20123;&#34987;&#24341;&#20837;&#25991;&#20214;&#30340;&#20869;&#23481;&#20250;&#34987;&#23548;&#20837;&#36827;&#26469;&#65292;&#21253;&#21547;&#39030;&#23618;&#30340;<code class="literal">&lt;beans/&gt;</code>&#20803;&#32032;&#65292;&#23427;&#24517;&#39035;&#26159;&#19968;&#20010;&#31526;&#21512;Spring&#26550;&#26500;&#30340;&#26377;&#25928;&#30340;XML bean&#23450;&#20041;&#12290;</p>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
+<p>&#20351;&#29992;&#19968;&#20010;&#30456;&#23545;"../"&#36335;&#24452;&#24341;&#29992;&#29238;&#30446;&#24405;&#20013;&#30340;&#37197;&#32622;&#26159;&#20801;&#35768;&#30340;&#65292;&#20294;&#26159;&#19981;&#25512;&#33616;&#36825;&#20040;&#20570;&#12290;&#22914;&#26524;&#36825;&#20040;&#20570;&#23601;&#20135;&#29983;&#20102;&#19968;&#20010;&#24403;&#21069;&#24212;&#29992;&#22806;&#30340;&#24341;&#29992;&#20381;&#36182;&#12290;&#29305;&#21035;&#19981;&#25512;&#33616;&#22312;&#20351;&#29992;"classpath:"&#36335;&#24452;&#30340;&#26102;&#20505;&#65292;&#22312;&#36816;&#34892;&#30340;&#26102;&#20505;&#35299;&#26512;&#36873;&#25321;&#8220;&#26368;&#36817;&#8221;&#30340;classpath&#36319;&#36335;&#24452;&#65292;&#28982;&#21518;&#22312;&#25214;&#29238;&#30446;&#24405;&#12290;Classpath&#37197;&#32622;&#30340;&#26356;&#25913;&#21487;&#33021;&#20250;&#23548;&#33268;&#36873;&#25321;&#19968;&#20010;&#19981;&#21516;&#30340;&#12289;&#38169;&#35823;&#30340;&#30446;&#24405;&#12290;</p>
+<p>&#36890;&#24120;&#24773;&#20917;&#19979;&#65292;&#20320;&#21487;&#20197;&#20351;&#29992;&#23436;&#20840;&#38480;&#23450;&#30340;&#36164;&#28304;&#20301;&#32622;&#26469;&#20195;&#26367;&#30456;&#23545;&#36335;&#24452;&#65292;&#20363;&#22914;&#65306;"file:C:/config/services.xml"&#25110;"classpath:/config/services.xml"&#12290;&#20294;&#26159;&#35831;&#27880;&#24847;&#65292;&#20320;&#30340;&#24212;&#29992;&#21487;&#33021;&#21644;&#19968;&#20010;&#29305;&#23450;&#30340;&#32477;&#23545;&#36335;&#24452;&#32806;&#21512;&#20102;&#12290;&#36890;&#24120;&#26356;&#21512;&#36866;&#30340;&#26041;&#24335;&#26159;&#36890;&#36807;&#38388;&#25509;&#30340;&#26041;&#24335;&#26469;&#20351;&#29992;&#32477;&#23545;&#36335;&#24452;&#65292;&#20363;&#22914;&#36890;&#36807;"${&#8230;}"&#21344;&#20301;&#31526;&#65292;&#22312;&#36816;&#34892;&#26102;&#35299;&#26512;JVM&#30340;&#31995;&#32479;&#23646;&#24615;&#12290;</p>
+</td></tr></table></div>
+
+</div>
+</div>
+<div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="beans-factory-client" href="#beans-factory-client"></a>5.2.3&nbsp;&#20351;&#29992;&#23481;&#22120;</h3></div></div></div>
+
+<p><code class="literal">ApplicationContext</code>&#26159;&#26234;&#33021;&#30340;&#24037;&#21378;&#25509;&#21475;&#65292;&#23427;&#33021;&#22815;&#32500;&#25252;&#27880;&#20876;&#19981;&#21516;beans&#21644;&#23427;&#20204;&#30340;&#20381;&#36182;&#12290;&#36890;&#36807;&#20351;&#29992; <code class="literal">T getBean(String
+name, Class&lt;T&gt; requiredType)</code> &#26041;&#27861;&#65292;&#20320;&#21487;&#20197;&#21462;&#24471;&#36825;&#20123;beans&#30340;&#23454;&#20363;&#12290;</p>
+<p>'ApplicationContext`&#20351;&#24744;&#21487;&#20197;&#35835;&#21462;&#30340;bean&#23450;&#20041;&#21644;&#20687;&#19979;&#38754;&#36825;&#26679;&#20351;&#29992;&#65306;</p>
+<pre class="programlisting"><span class="hl-comment">// &#21019;&#24314;&#24182;&#37197;&#32622;beans</span>
+ApplicationContext context =
+    <span class="hl-keyword">new</span> ClassPathXmlApplicationContext(<span class="hl-keyword">new</span> String[] {<span class="hl-string">"services.xml"</span>, <span class="hl-string">"daos.xml"</span>});
+
+<span class="hl-comment">// &#21462;&#24471;&#37197;&#32622;&#30340;&#23454;&#20363;</span>
+PetStoreService service = context.getBean(<span class="hl-string">"petStore"</span>, PetStoreService.<span class="hl-keyword">class</span>);
+
+<span class="hl-comment">// &#20351;&#29992;&#23454;&#20363;</span>
+List&lt;String&gt; userList = service.getUsernameList();</pre>
+
+<p>&#20351;&#29992;<code class="literal">getBean()</code>&#26469;&#33719;&#21462;&#24744;beans&#30340;&#23454;&#20363;&#65292;<code class="literal">ApplicationContext</code>&#25509;&#21475;&#36824;&#26377;&#20960;&#20010;&#20854;&#20182;&#30340;&#21487;&#20197;&#33719;&#21462;beans&#30340;&#26041;&#27861;&#65292;&#20294;&#26159;&#29702;&#24819;&#24773;&#20917;&#19979;&#65292;&#20320;&#26368;&#22909;&#19981;&#35201;&#20351;&#29992;&#36825;&#20123;&#26041;&#27861;&#12290;
+&#20107;&#23454;&#19978;&#65292;&#24744;&#30340;&#24212;&#29992;&#31243;&#24207;&#20195;&#30721;&#19981;&#24212;&#35843;&#29992;<span class="emphasis"><em>getBean()</em></span>&#25152;&#26377;&#26041;&#27861;&#65292;&#22240;&#32780;&#19981;&#20250;&#21644;Spring&#30340;&#25509;&#21475;&#20135;&#29983;&#20381;&#36182;&#12290;
+&#20363;&#22914;&#65292;Spring&#30340;&#19982;web&#26694;&#26550;&#30340;&#38598;&#25104;&#25552;&#20379;&#20102;&#23545;&#21508;&#31181;web&#26694;&#26550;&#31867;&#30340;&#20381;&#36182;&#27880;&#20837;&#65292;&#22914;&#25511;&#21046;&#22120;&#21644;JSF&#31649;&#29702;&#30340;bean&#12290;</p>
+</div>
+</div>
+<div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="beans-definition" href="#beans-definition"></a>5.3&nbsp;Bean&#27010;&#36848;</h2></div></div></div>
+
+<p>&#19968;&#20010;Spring IoC&#23481;&#22120;&#31649;&#29702;&#20102;&#19968;&#20010;&#25110;&#32773;&#22810;&#20010; <span class="emphasis"><em>beans</em></span>&#12290;&#36825;&#20123;beans&#36890;&#36807;&#20320;&#25552;&#20379;&#32473;&#23481;&#22120;&#30340;&#37197;&#32622;&#20803;&#25968;&#25454;&#36827;&#34892;&#21019;&#24314;&#65292;&#20363;&#22914;&#36890;&#36807;XML&#24418;&#24335;&#30340;<code class="literal">&lt;bean/&gt;</code>&#23450;&#20041;&#12290;</p>
+<p>&#22312;&#23481;&#22120;&#20869;&#26412;&#36523;&#65292;&#36825;&#20123;bean&#23450;&#20041;&#34920;&#31034;&#20026;<code class="literal">BeanDefinition</code>&#23545;&#35937;&#65292;&#23427;&#21253;&#21547;&#20102;&#22914;&#19979;&#30340;&#20803;&#25968;&#25454;&#65306;</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<span class="emphasis"><em>&#21253;&#38480;&#23450;&#30340;&#31867;&#21517;&#65306;</em></span> &#36890;&#24120;&#26159;bean&#23450;&#20041;&#30340;&#23454;&#29616;&#31867;&#12290;
+</li><li class="listitem">
+Bean&#34892;&#20026;&#37197;&#32622;&#20803;&#32032;&#65292;&#36825;&#20123;&#29366;&#24577;&#25351;&#31034;bean&#22312;&#23481;&#22120;&#20013;&#30340;&#34892;&#20026;&#65288;&#33539;&#22260;&#65292;&#29983;&#21629;&#21608;&#26399;&#22238;&#35843;&#20989;&#25968;&#65292;&#31561;&#31561;&#65289;&#12290;
+</li><li class="listitem">
+bean&#24037;&#20316;&#38656;&#35201;&#24341;&#29992;&#30340;&#20854;&#20182;beans&#65307;&#36825;&#20123;&#24341;&#29992;&#20063;&#31216;&#20026; <span class="emphasis"><em>&#21327;&#20316;&#32773;</em></span> &#25110; <span class="emphasis"><em>&#20381;&#36182;&#32773;</em></span>&#12290;
+</li><li class="listitem">
+&#20854;&#20182;&#37197;&#32622;&#35774;&#32622;&#24212;&#29992;&#20110;&#26032;&#21019;&#24314;&#30340;&#23545;&#35937;&#20013;&#35774;&#32622;&#65292;&#20363;&#22914;&#36830;&#25509;&#27744;&#20013;&#30340;&#36830;&#25509;&#25968;&#25110;&#32773;&#36830;&#25509;&#27744;&#30340;&#22823;&#23567;&#38480;&#21046;&#12290;
+</li></ul></div>
+
+<p>&#36825;&#20123;&#20803;&#25968;&#25454;&#36716;&#25442;&#25104;&#32452;&#25104;&#27599;&#20010;bean&#23450;&#20041;&#30340;&#19968;&#32452;&#23646;&#24615;&#12290;</p>
+<div class="table"><a name="beans-factory-bean-definition-tbl" href="#beans-factory-bean-definition-tbl"></a><p class="title"><b>Table&nbsp;5.1.&nbsp;bean&#23450;&#20041;</b></p><div class="table-contents">
+
+  <table summary="bean&#23450;&#20041;" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; "><colgroup><col class="col_1"><col class="col_2"></colgroup><thead><tr><th style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left" valign="top">&#23646;&#24615;&#21517;</th><th style="border-bottom: 0.5pt solid ; " align="left" valign="top">&#35828;&#26126;&#8230;</th></tr></thead><tbody><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left" valign="top"><p>class</p></td><td style="border-bottom: 0.5pt solid ; " align="left" valign="top"><p><a class="xref" href="http://itmyhome.com/spring/beans.html#beans-factory-class" title="5.3.2&nbsp;Instantiating beans">Section&nbsp;5.3.2, &#8220;Instantiating beans&#8221;</a></p></td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left" valign="top"><p>name</p></td><td style="border-bottom: 0.5pt solid ; " align="left" valign="top"><p><a class="xref" href="http://itmyhome.com/spring/beans.html#beans-beanname" title="5.3.1&nbsp;&#21629;&#21517;beans">Section&nbsp;5.3.1, &#8220;&#21629;&#21517;beans&#8221;</a></p></td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left" valign="top"><p>scope</p></td><td style="border-bottom: 0.5pt solid ; " align="left" valign="top"><p><a class="xref" href="http://itmyhome.com/spring/beans.html#beans-factory-scopes" title="5.5&nbsp;Bean scopes">Section&nbsp;5.5, &#8220;Bean scopes&#8221;</a></p></td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left" valign="top"><p>constructor arguments</p></td><td style="border-bottom: 0.5pt solid ; " align="left" valign="top"><p><a class="xref" href="http://itmyhome.com/spring/beans.html#beans-factory-collaborators" title="5.4.1&nbsp;&#20381;&#36182;&#27880;&#20837;">Section&nbsp;5.4.1, &#8220;&#20381;&#36182;&#27880;&#20837;&#8221;</a></p></td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left" valign="top"><p>properties</p></td><td style="border-bottom: 0.5pt solid ; " align="left" valign="top"><p><a class="xref" href="http://itmyhome.com/spring/beans.html#beans-factory-collaborators" title="5.4.1&nbsp;&#20381;&#36182;&#27880;&#20837;">Section&nbsp;5.4.1, &#8220;&#20381;&#36182;&#27880;&#20837;&#8221;</a></p></td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left" valign="top"><p>autowiring mode</p></td><td style="border-bottom: 0.5pt solid ; " align="left" valign="top"><p><a class="xref" href="http://itmyhome.com/spring/beans.html#beans-factory-autowire" title="5.4.5&nbsp;&#33258;&#21160;&#35013;&#37197;&#21327;&#20316;&#32773;">Section&nbsp;5.4.5, &#8220;&#33258;&#21160;&#35013;&#37197;&#21327;&#20316;&#32773;&#8221;</a></p></td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left" valign="top"><p>lazy-initialization mode</p></td><td style="border-bottom: 0.5pt solid ; " align="left" valign="top"><p><a class="xref" href="http://itmyhome.com/spring/beans.html#beans-factory-lazy-init" title="5.4.4&nbsp;&#24310;&#36831;&#21021;&#22987;&#21270;bean">Section&nbsp;5.4.4, &#8220;&#24310;&#36831;&#21021;&#22987;&#21270;bean&#8221;</a></p></td></tr><tr><td style="border-right: 0.5pt solid ; border-bottom: 0.5pt solid ; " align="left" valign="top"><p>initialization method</p></td><td style="border-bottom: 0.5pt solid ; " align="left" valign="top"><p><a class="xref" href="http://itmyhome.com/spring/beans.html#beans-factory-lifecycle-initializingbean" title="Initialization callbacks">the section called &#8220;Initialization callbacks&#8221;</a></p></td></tr><tr><td style="border-right: 0.5pt solid ; " align="left" valign="top"><p>destruction method</p></td><td style="" align="left" valign="top"><p><a class="xref" href="http://itmyhome.com/spring/beans.html#beans-factory-lifecycle-disposablebean" title="Destruction callbacks">the section called &#8220;Destruction callbacks&#8221;</a></p></td></tr></tbody></table>
+</div></div><br class="table-break">
+
+<p>&#38500;&#20102;bean&#23450;&#20041;&#22806;&#65292;&#23427;&#36824;&#21253;&#21547;&#26377;&#20851;&#22914;&#20309;&#21019;&#24314;&#29305;&#23450;bean&#30340;&#20449;&#24687;&#65292;<code class="literal">ApplicationContext</code>&#23454;&#29616;&#36824;&#20801;&#35768;&#30001;&#29992;&#25143;&#22312;&#23481;&#22120;&#22806;&#21019;&#24314;&#27880;&#20876;&#29616;&#26377;&#30340;&#23545;&#35937;&#12290;
+&#36825;&#26159;&#36890;&#36807;&#35775;&#38382;ApplicationContext&#30340;&#24037;&#21378;&#26041;&#27861;&#65292;&#36890;&#36807;<code class="literal">getBeanFactory()</code>&#36820;&#22238;<code class="literal">DefaultListableBeanFactory</code>&#24037;&#21378;&#26041;&#27861;&#30340;&#23454;&#29616;&#12290;
+<code class="literal">DefaultListableBeanFactory</code>&#25903;&#25345;&#36890;&#36807;<code class="literal">registerSingleton(..)</code>&#26041;&#27861;&#21644;<code class="literal">registerBeanDefinition(..)</code>&#26041;&#27861;&#36827;&#34892;&#27880;&#20876;&#12290;
+&#28982;&#32780;&#65292;&#20856;&#22411;&#30340;&#24212;&#29992;&#31243;&#24207;&#30340;&#24037;&#20316;&#20165;&#20165;&#36890;&#36807;&#20803;&#25968;&#25454;&#23450;&#20041;&#30340;bean&#23450;&#20041;beans&#12290;</p>
+<div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="beans-beanname" href="#beans-beanname"></a>5.3.1&nbsp;&#21629;&#21517;beans</h3></div></div></div>
+
+<p>&#27599;&#19968;&#20010;bean&#37117;&#26377;&#19968;&#20010;&#25110;&#22810;&#20010;&#26631;&#35782;&#31526;&#65292;&#36825;&#20123;bean&#30340;&#26631;&#35782;&#31526;&#22312;&#23427;&#25152;&#22312;&#30340;&#23481;&#22120;&#20013;&#24517;&#39035;&#21807;&#19968;&#12290;
+&#19968;&#20010;bean&#36890;&#24120;&#21482;&#26377;&#19968;&#20010;&#26631;&#35782;&#31526;&#65292;&#20294;&#22914;&#26524;&#23427;&#38656;&#35201;&#19968;&#20010;&#20197;&#19978;&#30340;&#26631;&#35782;&#31526;&#65292;&#22810;&#20313;&#30340;&#26631;&#35782;&#31526;&#21487;&#20197;&#34987;&#35748;&#20026;&#26159;&#21035;&#21517;&#12290;</p>
+<p>&#22522;&#20110;xml&#30340;&#37197;&#32622;&#20803;&#25968;&#25454;&#20013;&#65292;&#20320;&#21487;&#20197;&#20351;&#29992;<code class="literal">id</code> &#21644;/&#25110; <code class="literal">name</code> &#23646;&#24615;&#26469;&#25351;&#23450;bean&#30340;&#26631;&#35782;&#31526;&#12290;
+<code class="literal">id</code>&#23646;&#24615;&#20801;&#35768;&#24744;&#21482;&#25351;&#23450;&#19968;&#20010;id&#12290;&#36890;&#24120;&#36825;&#20123;&#21517;&#23383;&#26159;&#23383;&#27597;&#25968;&#23383;&#32452;&#25104;&#30340;&#65288;<span class="emphasis"><em>myBean</em></span>,<span class="emphasis"><em>fooService</em></span>&#31561;&#31561;&#65289;&#65292;&#20294;&#20063;&#21487;&#33021;&#21253;&#21547;&#29305;&#27530;&#23383;&#31526;&#12290;
+&#22914;&#26524;&#20320;&#24819;&#32473;bean&#28155;&#21152;&#20854;&#20182;&#30340;&#21035;&#21517;&#65292;&#20320;&#21487;&#20197;&#36890;&#36807;<code class="literal">name</code>&#23646;&#24615;&#26469;&#25351;&#23450;&#36825;&#20123;&#21035;&#21517;&#65292;&#21487;&#20197;&#20351;&#29992;&#36887;&#21495;(<code class="literal">,</code>)&#65292;&#20998;&#21495;(<code class="literal">;</code>)&#25110;&#32773;&#31354;&#26684;&#26469;&#20998;&#21106;&#36825;&#20123;&#21035;&#21517;&#12290;
+&#36825;&#37324;&#38656;&#35201;&#29305;&#21035;&#27880;&#24847;&#30340;&#26159;&#65292;&#22312;Spring3.1&#29256;&#26412;&#20197;&#21069;&#65292;<code class="literal">id</code>&#23646;&#24615;&#34987;&#23450;&#20041;&#25104;<code class="literal">xsd:ID</code>&#31867;&#22411;&#65288;&#21487;&#20197;&#36890;&#36807;xml&#35268;&#21017;&#38480;&#21046;&#21807;&#19968;&#65289;&#65292;
+&#22312;Spring3.1&#20197;&#21450;&#20197;&#21518;&#30340;&#29256;&#26412;&#20013;&#65292;<code class="literal">id</code>&#34987;&#23450;&#20041;&#25104;&#20102;<code class="literal">xsd:string</code>&#31867;&#22411;&#65292;<code class="literal">id</code>&#23646;&#24615;&#19981;&#22312;&#36890;&#36807;XML&#35299;&#26512;&#22120;&#38480;&#21046;&#20026;&#21807;&#19968;&#65292;&#32780;&#26159;&#36890;&#36807;&#23481;&#22120;&#24378;&#21046;&#38480;&#21046;&#20026;&#21807;&#19968;&#12290;</p>
+<p>bean&#30340;id&#21644;name&#19981;&#26159;&#24517;&#39035;&#30340;&#12290;&#22914;&#26524;&#27809;&#26377;&#26126;&#30830;&#30340;name&#25110;&#32773;id&#65292;&#23481;&#26131;&#20250;&#32473;bean&#29983;&#25104;&#19968;&#20010;&#21807;&#19968;&#30340;&#21517;&#23383;&#12290;
+&#20294;&#26159;&#65292;&#22914;&#26524;&#20320;&#24819;&#36890;&#36807;&#21517;&#31216;&#24341;&#29992;&#36825;&#20010;bean&#65292;&#36890;&#36807;&#20351;&#29992;<code class="literal">ref</code>&#20803;&#32032;&#25110;<a class="link" href="http://itmyhome.com/spring/beans.html#beans-servicelocator" title="5.16.2&nbsp;Glue code and the evil singleton">&#26381;&#21153;&#23450;&#20301;&#22120;&#27169;&#24335;</a> &#26597;&#25214;&#65292;&#20320;&#23601;&#24517;&#39035;&#25552;&#20379;&#19968;&#20010;&#21517;&#23383;&#12290;</p>
+<p>&#19981;&#25552;&#20379;&#21517;&#31216;&#30340;&#21407;&#22240;&#21644;<a class="link" href="http://itmyhome.com/spring/beans.html#beans-inner-beans" title="&#20869;&#37096;bean">&#20869;&#37096;beans</a>&#21644;<a class="link" href="http://itmyhome.com/spring/beans.html#beans-factory-autowire" title="5.4.5&nbsp;&#33258;&#21160;&#35013;&#37197;&#21327;&#20316;&#32773;">&#33258;&#21160;&#35013;&#37197;</a>&#26377;&#20851;&#12290;</p>
+<div class="sidebar"><div class="titlepage"><div><div><p class="title"><b>Bean&#21629;&#21517;&#32422;&#23450;</b></p></div></div></div>
+
+<p>&#35813;&#20844;&#32422;&#20351;&#29992;&#26631;&#20934;&#30340;Java&#23454;&#20363;&#23383;&#27573;&#21517;&#31216;&#21629;&#21517;beans&#12290;&#20063;&#23601;&#26159;&#35828;bean&#21517;&#23383;&#30001;&#19968;&#20010;&#23567;&#20889;&#23383;&#27597;&#24320;&#22836;&#65292;&#21518;&#38754;&#37319;&#29992;&#39548;&#23792;&#24335;&#21629;&#21517;&#35268;&#21017;&#12290;
+&#36825;&#31181;&#21517;&#23383;&#22914;&#65288;&#19981;&#21253;&#21547;&#24341;&#21495;&#65289;&#65306;<code class="literal">'accountManager'</code>&#12289;
+<code class="literal">'accountService'</code>&#12289;<code class="literal">'userDao'</code>&#12289;<code class="literal">'loginController'</code>&#31561;&#31561;&#12290;</p>
+<p>&#19968;&#33268;&#30340;beans&#21629;&#21517;&#21487;&#20197;&#35753;&#24744;&#30340;&#37197;&#32622;&#23481;&#26131;&#38405;&#35835;&#21644;&#29702;&#35299;&#65292;&#22914;&#26524;&#20320;&#27491;&#22312;&#20351;&#29992;Spring AOP&#65292;&#24403;&#20320;&#36890;&#36807;beans&#21517;&#31216;&#24212;&#29992;&#21040;advice&#26102;&#65292;&#36825;&#20250;&#23545;&#20320;&#24110;&#21161;&#24456;&#22823;&#12290;</p>
+</div>
+
+<div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="beans-beanname-alias" href="#beans-beanname-alias"></a>&#22312;bean&#23450;&#20041;&#22806;&#23450;&#20041;&#21035;&#21517;</h4></div></div></div>
+
+<p>In a bean definition itself, you can supply more than one name for the bean, by using a
+combination of up to one name specified by the <code class="literal">id</code> attribute, and any number of other
+names in the <code class="literal">name</code> attribute. These names can be equivalent aliases to the same bean,
+and are useful for some situations, such as allowing each component in an application to
+refer to a common dependency by using a bean name that is specific to that component
+itself.</p>
+<p>Specifying all aliases where the bean is actually defined is not always adequate,
+however. It is sometimes desirable to introduce an alias for a bean that is defined
+elsewhere. This is commonly the case in large systems where configuration is split
+amongst each subsystem, each subsystem having its own set of object definitions. In
+XML-based configuration metadata, you can use the <code class="literal">&lt;alias/&gt;</code> element to accomplish this.</p>
+<pre class="programlisting"><span class="hl-tag">&lt;alias</span> <span class="hl-attribute">name</span>=<span class="hl-value">"fromName"</span> <span class="hl-attribute">alias</span>=<span class="hl-value">"toName"</span><span class="hl-tag">/&gt;</span></pre>
+
+<p>In this case, a bean in the same container which is named <code class="literal">fromName</code>, may also,
+after the use of this alias definition, be referred to as <code class="literal">toName</code>.</p>
+<p>For example, the configuration metadata for subsystem A may refer to a DataSource via
+the name <code class="literal">subsystemA-dataSource</code>. The configuration metadata for subsystem B may refer to
+a DataSource via the name <code class="literal">subsystemB-dataSource</code>. When composing the main application
+that uses both these subsystems the main application refers to the DataSource via the
+name <code class="literal">myApp-dataSource</code>. To have all three names refer to the same object you add to the
+MyApp configuration metadata the following aliases definitions:</p>
+<pre class="programlisting"><span class="hl-tag">&lt;alias</span> <span class="hl-attribute">name</span>=<span class="hl-value">"subsystemA-dataSource"</span> <span class="hl-attribute">alias</span>=<span class="hl-value">"subsystemB-dataSource"</span><span class="hl-tag">/&gt;</span>
+<span class="hl-tag">&lt;alias</span> <span class="hl-attribute">name</span>=<span class="hl-value">"subsystemA-dataSource"</span> <span class="hl-attribute">alias</span>=<span class="hl-value">"myApp-dataSource"</span><span class="hl-tag"> /&gt;</span></pre>
+
+<p>Now each component and the main application can refer to the dataSource through a name
+that is unique and guaranteed not to clash with any other definition (effectively
+creating a namespace), yet they refer to the same bean.</p>
+<div class="sidebar"><div class="titlepage"><div><div><p class="title"><b>Java-configuration</b></p></div></div></div>
+
+<p>If you are using Java-configuration, the <code class="literal">@Bean</code> annotation can be used to provide aliases
+see <a class="xref" href="http://itmyhome.com/spring/beans.html#beans-java-bean-annotation" title="5.12.3&nbsp;Using the @Bean annotation">Section&nbsp;5.12.3, &#8220;Using the @Bean annotation&#8221;</a> for details.</p>
+</div>
+
+</div>
+</div>
+<div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="beans-factory-class" href="#beans-factory-class"></a>5.3.2&nbsp;Instantiating beans</h3></div></div></div>
+
+<p>A bean definition essentially is a recipe for creating one or more objects. The
+container looks at the recipe for a named bean when asked, and uses the configuration
+metadata encapsulated by that bean definition to create (or acquire) an actual object.</p>
+<p>If you use XML-based configuration metadata, you specify the type (or class) of object
+that is to be instantiated in the <code class="literal">class</code> attribute of the <code class="literal">&lt;bean/&gt;</code> element. This
+<code class="literal">class</code> attribute, which internally is a <code class="literal">Class</code> property on a <code class="literal">BeanDefinition</code>
+instance, is usually mandatory. (For exceptions, see
+<a class="xref" href="http://itmyhome.com/spring/beans.html#beans-factory-class-instance-factory-method" title="Instantiation using an instance factory method">the section called &#8220;Instantiation using an instance factory method&#8221;</a> and <a class="xref" href="http://itmyhome.com/spring/beans.html#beans-child-bean-definitions" title="5.7&nbsp;Bean definition inheritance">Section&nbsp;5.7, &#8220;Bean definition inheritance&#8221;</a>.)
+You use the <code class="literal">Class</code> property in one of two ways:</p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Typically, to specify the bean class to be constructed in the case where the container
+itself directly creates the bean by calling its constructor reflectively, somewhat
+equivalent to Java code using the <code class="literal">new</code> operator.
+</li><li class="listitem">
+To specify the actual class containing the <code class="literal">static</code> factory method that will be
+invoked to create the object, in the less common case where the container invokes a
+<code class="literal">static</code> <span class="emphasis"><em>factory</em></span> method on a class to create the bean. The object type returned
+from the invocation of the <code class="literal">static</code> factory method may be the same class or another
+class entirely.
+</li></ul></div>
+
+<div class="sidebar"><div class="titlepage"></div>
+<p>
+<b>Inner class names.&nbsp;</b>
+If you want to configure a bean definition for a <code class="literal">static</code> nested class, you have to use
+the <span class="emphasis"><em>binary</em></span> name of the inner class.
+</p>
+<p>For example, if you have a class called <code class="literal">Foo</code> in the <code class="literal">com.example</code> package, and this
+<code class="literal">Foo</code> class has a <code class="literal">static</code> inner class called <code class="literal">Bar</code>, the value of the <code class="literal">'class'</code>
+attribute on a bean definition would be&#8230;</p>
+<p><code class="literal">com.example.Foo$Bar</code></p>
+<p>Notice the use of the <code class="literal">$</code> character in the name to separate the inner class name from
+the outer class name.</p>
+</div>
+
+<div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="beans-factory-class-ctor" href="#beans-factory-class-ctor"></a>Instantiation with a constructor</h4></div></div></div>
+
+<p>When you create a bean by the constructor approach, all normal classes are usable by and
+compatible with Spring. That is, the class being developed does not need to implement
+any specific interfaces or to be coded in a specific fashion. Simply specifying the bean
+class should suffice. However, depending on what type of IoC you use for that specific
+bean, you may need a default (empty) constructor.</p>
+<p>The Spring IoC container can manage virtually <span class="emphasis"><em>any</em></span> class you want it to manage; it is
+not limited to managing true JavaBeans. Most Spring users prefer actual JavaBeans with
+only a default (no-argument) constructor and appropriate setters and getters modeled
+after the properties in the container. You can also have more exotic non-bean-style
+classes in your container. If, for example, you need to use a legacy connection pool
+that absolutely does not adhere to the JavaBean specification, Spring can manage it as
+well.</p>
+<p>With XML-based configuration metadata you can specify your bean class as follows:</p>
+<pre class="programlisting"><span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"exampleBean"</span> <span class="hl-attribute">class</span>=<span class="hl-value">"examples.ExampleBean"</span><span class="hl-tag">/&gt;</span>
+
+<span class="hl-tag">&lt;bean</span> <span class="hl-attribute">name</span>=<span class="hl-value">"anotherExample"</span> <span class="hl-attribute">class</span>=<span class="hl-value">"examples.ExampleBeanTwo"</span><span class="hl-tag">/&gt;</span></pre>
+
+<p>For details about the mechanism for supplying arguments to the constructor (if required)
+and setting object instance properties after the object is constructed, see
+<a class="link" href="http://itmyhome.com/spring/beans.html#beans-factory-collaborators" title="5.4.1&nbsp;&#20381;&#36182;&#27880;&#20837;">Injecting Dependencies</a>.</p>
+</div>
+<div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="beans-factory-class-static-factory-method" href="#beans-factory-class-static-factory-method"></a>Instantiation with a static factory method</h4></div></div></div>
+
+<p>When defining a bean that you create with a static factory method, you use the <code class="literal">class</code>
+attribute to specify the class containing the <code class="literal">static</code> factory method and an attribute
+named <code class="literal">factory-method</code> to specify the name of the factory method itself. You should be
+able to call this method (with optional arguments as described later) and return a live
+object, which subsequently is treated as if it had been created through a constructor.
+One use for such a bean definition is to call <code class="literal">static</code> factories in legacy code.</p>
+<p>The following bean definition specifies that the bean will be created by calling a
+factory-method. The definition does not specify the type (class) of the returned object,
+only the class containing the factory method. In this example, the <code class="literal">createInstance()</code>
+method must be a <span class="emphasis"><em>static</em></span> method.</p>
+<pre class="programlisting"><span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"clientService"</span>
+    <span class="hl-attribute">class</span>=<span class="hl-value">"examples.ClientService"</span>
+    <span class="hl-attribute">factory-method</span>=<span class="hl-value">"createInstance"</span><span class="hl-tag">/&gt;</span></pre>
+
+<pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">class</span> ClientService {
+    <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> ClientService clientService = <span class="hl-keyword">new</span> ClientService();
+    <span class="hl-keyword">private</span> ClientService() {}
+
+    <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> ClientService createInstance() {
+        <span class="hl-keyword">return</span> clientService;
+    }
+}</pre>
+
+<p>For details about the mechanism for supplying (optional) arguments to the factory method
+and setting object instance properties after the object is returned from the factory,
+see <a class="link" href="http://itmyhome.com/spring/beans.html#beans-factory-properties-detailed" title="5.4.2&nbsp;&#20381;&#36182;&#37197;&#32622;&#35814;&#35299;">Dependencies and configuration in detail</a>.</p>
+</div>
+<div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="beans-factory-class-instance-factory-method" href="#beans-factory-class-instance-factory-method"></a>Instantiation using an instance factory method</h4></div></div></div>
+
+<p>Similar to instantiation through a <a class="link" href="http://itmyhome.com/spring/beans.html#beans-factory-class-static-factory-method" title="Instantiation with a static factory method">static
+factory method</a>, instantiation with an instance factory method invokes a non-static
+method of an existing bean from the container to create a new bean. To use this
+mechanism, leave the <code class="literal">class</code> attribute empty, and in the <code class="literal">factory-bean</code> attribute,
+specify the name of a bean in the current (or parent/ancestor) container that contains
+the instance method that is to be invoked to create the object. Set the name of the
+factory method itself with the <code class="literal">factory-method</code> attribute.</p>
+<pre class="programlisting"><span class="hl-comment">&lt;!-- the factory bean, which contains a method called createInstance() --&gt;</span>
+<span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"serviceLocator"</span> <span class="hl-attribute">class</span>=<span class="hl-value">"examples.DefaultServiceLocator"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-comment">&lt;!-- inject any dependencies required by this locator bean --&gt;</span>
+<span class="hl-tag">&lt;/bean&gt;</span>
+
+<span class="hl-comment">&lt;!-- the bean to be created via the factory bean --&gt;</span>
+<span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"clientService"</span>
+    <span class="hl-attribute">factory-bean</span>=<span class="hl-value">"serviceLocator"</span>
+    <span class="hl-attribute">factory-method</span>=<span class="hl-value">"createClientServiceInstance"</span><span class="hl-tag">/&gt;</span></pre>
+
+<pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">class</span> DefaultServiceLocator {
+
+    <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> ClientService clientService = <span class="hl-keyword">new</span> ClientServiceImpl();
+    <span class="hl-keyword">private</span> DefaultServiceLocator() {}
+
+    <span class="hl-keyword">public</span> ClientService createClientServiceInstance() {
+        <span class="hl-keyword">return</span> clientService;
+    }
+}</pre>
+
+<p>One factory class can also hold more than one factory method as shown here:</p>
+<pre class="programlisting"><span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"serviceLocator"</span> <span class="hl-attribute">class</span>=<span class="hl-value">"examples.DefaultServiceLocator"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-comment">&lt;!-- inject any dependencies required by this locator bean --&gt;</span>
+<span class="hl-tag">&lt;/bean&gt;</span>
+
+<span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"clientService"</span>
+    <span class="hl-attribute">factory-bean</span>=<span class="hl-value">"serviceLocator"</span>
+    <span class="hl-attribute">factory-method</span>=<span class="hl-value">"createClientServiceInstance"</span><span class="hl-tag">/&gt;</span>
+
+<span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"accountService"</span>
+    <span class="hl-attribute">factory-bean</span>=<span class="hl-value">"serviceLocator"</span>
+    <span class="hl-attribute">factory-method</span>=<span class="hl-value">"createAccountServiceInstance"</span><span class="hl-tag">/&gt;</span></pre>
+
+<pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">class</span> DefaultServiceLocator {
+
+    <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> ClientService clientService = <span class="hl-keyword">new</span> ClientServiceImpl();
+    <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> AccountService accountService = <span class="hl-keyword">new</span> AccountServiceImpl();
+
+    <span class="hl-keyword">private</span> DefaultServiceLocator() {}
+
+    <span class="hl-keyword">public</span> ClientService createClientServiceInstance() {
+        <span class="hl-keyword">return</span> clientService;
+    }
+
+    <span class="hl-keyword">public</span> AccountService createAccountServiceInstance() {
+        <span class="hl-keyword">return</span> accountService;
+    }
+
+}</pre>
+
+<p>This approach shows that the factory bean itself can be managed and configured through
+dependency injection (DI). See <a class="link" href="http://itmyhome.com/spring/beans.html#beans-factory-properties-detailed" title="5.4.2&nbsp;&#20381;&#36182;&#37197;&#32622;&#35814;&#35299;">Dependencies and
+configuration in detail</a>.</p>
+<div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
+<p>In Spring documentation,<span class="emphasis"><em> factory bean</em></span> refers to a bean that is configured in the
+Spring container that will create objects through an
+<a class="link" href="http://itmyhome.com/spring/beans.html#beans-factory-class-instance-factory-method" title="Instantiation using an instance factory method">instance</a> or
+<a class="link" href="http://itmyhome.com/spring/beans.html#beans-factory-class-static-factory-method" title="Instantiation with a static factory method">static</a> factory method. By contrast,
+<code class="literal">FactoryBean</code> (notice the capitalization) refers to a Spring-specific
+<a class="link" href="http://itmyhome.com/spring/beans.html#beans-factory-extension-factorybean" title="5.8.3&nbsp;Customizing instantiation logic with a FactoryBean"><code class="literal">FactoryBean</code></a>.</p>
+</td></tr></table></div>
+
+</div>
+</div>
+</div>
+<div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="beans-dependencies" href="#beans-dependencies"></a>5.4&nbsp;&#20381;&#36182;</h2></div></div></div>
+
+<p>&#20856;&#22411;&#30340;&#20225;&#19994;&#24212;&#29992;&#19981;&#20250;&#21333;&#19968;&#24471;&#30001;&#19968;&#20010;&#23545;&#35937;&#32452;&#25104;&#65288;&#25110;&#32773;&#35828;Spring&#26415;&#35821;&#20013;&#30340;bean&#65289;&#12290;&#21363;&#20415;&#26159;&#26368;&#31616;&#21333;&#30340;&#31995;&#32479;&#20063;&#38656;&#35201;&#22810;&#20010;&#23545;&#35937;&#20849;&#21516;&#21327;&#20316;&#26469;&#23637;&#31034;&#32473;&#32456;&#31471;&#29992;&#25143;&#19968;&#20010;&#26465;&#29702;&#20998;&#26126;&#30340;&#24212;&#29992;&#12290;&#25509;&#19979;&#26469;&#30340;&#36825;&#19968;&#33410;&#20869;&#23481;&#20250;&#38416;&#36848;&#22914;&#20309;&#23450;&#20041;&#22810;&#20010;&#29420;&#31435;&#20110;&#24212;&#29992;&#31243;&#24207;&#30340;bean&#19968;&#36215;&#21327;&#21516;&#24037;&#20316;&#23436;&#25104;&#30446;&#26631;&#12290;</p>
+<div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="beans-factory-collaborators" href="#beans-factory-collaborators"></a>5.4.1&nbsp;&#20381;&#36182;&#27880;&#20837;</h3></div></div></div>
+
+<p><span class="emphasis"><em>&#20381;&#36182;&#27880;&#20837;</em></span> (DI) &#26159;&#25351;&#23545;&#35937;&#20043;&#38388;&#30340;&#20381;&#36182;&#20851;&#31995;&#65292;&#20063;&#23601;&#26159;&#35828;&#65292;&#19968;&#36215;&#21327;&#20316;&#30340;&#20854;&#20182;&#23545;&#35937;&#21482;&#36890;&#36807;&#26500;&#36896;&#22120;&#30340;&#21442;&#25968;&#12289;&#24037;&#21378;&#26041;&#27861;&#30340;&#21442;&#25968;&#25110;&#32773;&#30001;&#26500;&#36896;&#20989;&#25968;&#25110;&#32773;&#24037;&#21378;&#26041;&#27861;&#21019;&#24314;&#30340;&#23545;&#35937;&#35774;&#32622;&#23646;&#24615;&#12290;&#22240;&#27492;&#23481;&#22120;&#30340;&#24037;&#20316;&#23601;&#26159;&#21019;&#24314;bean&#24182;&#27880;&#20837;&#37027;&#20123;&#20381;&#36182;&#20851;&#31995;&#12290;&#36825;&#20010;&#36807;&#31243;&#23454;&#36136;&#36890;&#36807;&#30452;&#25509;&#20351;&#29992;&#31867;&#30340;&#26500;&#36896;&#20989;&#25968;&#25110;&#32773;&#26381;&#21153;&#23450;&#20301;&#27169;&#24335;&#26469;&#21453;&#36716;&#25511;&#21046;bean&#30340;&#23454;&#20363;&#25110;&#32773;&#20854;&#20381;&#36182;&#20851;&#31995;&#30340;&#20301;&#32622;&#65292;&#22240;&#27492;&#23427;&#26377;&#21478;&#22806;&#19968;&#20010;&#21517;&#23383;&#21483;<span class="emphasis"><em>&#25511;&#21046;&#21453;&#36716;</em></span> (IoC)&#12290;</p>
+<p>&#36816;&#29992;&#20102;DI&#21407;&#29702;&#20195;&#30721;&#20250;&#26356;&#21152;&#28165;&#26224;&#24182;&#19988;&#30001;&#20381;&#36182;&#20851;&#31995;&#25552;&#20379;&#23545;&#35937;&#20063;&#23558;&#20351;&#21508;&#23618;&#27425;&#30340;&#26494;&#32806;&#21512;&#21464;&#24471;&#26356;&#21152;&#23481;&#26131;&#12290;&#23545;&#35937;&#19981;&#38656;&#35201;&#30693;&#36947;&#20854;&#20381;&#36182;&#20851;&#31995;&#65292;&#20063;&#19981;&#38656;&#35201;&#30693;&#36947;&#23427;&#30340;&#20301;&#32622;&#25110;&#32773;&#31867;&#20043;&#38388;&#30340;&#20381;&#36182;&#12290;&#22240;&#27492;&#65292;&#20320;&#30340;&#31867;&#20250;&#26356;&#23481;&#26131;&#27979;&#35797;&#65292;&#23588;&#20854;&#26159;&#24403;&#20381;&#36182;&#20851;&#31995;&#26159;&#22312;&#25509;&#21475;&#25110;&#32773;&#25277;&#35937;&#22522;&#26412;&#31867;&#65292;</p>
+<p>DI&#20027;&#35201;&#26377;&#20004;&#31181;&#27880;&#20837;&#26041;&#24335;&#65292;&#21363;<a class="link" href="http://itmyhome.com/spring/beans.html#beans-constructor-injection" title="&#26500;&#36896;&#22120;&#27880;&#20837;">&#26500;&#36896;&#22120;&#27880;&#20837;</a>&#21644;<a class="link" href="http://itmyhome.com/spring/beans.html#beans-setter-injection" title="Setter&#27880;&#20837;">Setter&#27880;&#20837;</a>&#12290;</p>
+<div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="beans-constructor-injection" href="#beans-constructor-injection"></a>&#26500;&#36896;&#22120;&#27880;&#20837;</h4></div></div></div>
+
+<p><span class="emphasis"><em>&#22522;&#20110;&#26500;&#36896;&#22120;&#27880;&#20837;</em></span> DI&#36890;&#36807;&#35843;&#29992;&#24102;&#21442;&#25968;&#30340;&#26500;&#36896;&#22120;&#26469;&#23454;&#29616;&#65292;&#27599;&#20010;&#21442;&#25968;&#20195;&#34920;&#30528;&#19968;&#20010;&#20381;&#36182;&#20851;&#31995;&#12290;&#27492;&#22806;&#65292;&#36824;&#21487;&#36890;&#36807;&#32473; <code class="literal">&#38745;&#24577;</code> &#24037;&#21378;&#26041;&#27861;&#20256;&#21442;&#25968;&#26469;&#26500;&#36896;bean&#12290;&#25509;&#19979;&#26469;&#30340;&#20171;&#32461;&#23558;&#35748;&#20026;&#32473;&#26500;&#36896;&#22120;&#20256;&#21442;&#25968;&#21644;&#32473;&#38745;&#24577;&#24037;&#21378;&#26041;&#27861;&#20256;&#21442;&#25968;&#26159;&#31867;&#20284;&#30340;&#12290;&#19979;&#38754;&#23637;&#31034;&#20102;&#21482;&#33021;&#20351;&#29992;&#26500;&#36896;&#22120;&#26469;&#27880;&#20837;&#20381;&#36182;&#20851;&#31995;&#30340;&#20363;&#23376;&#12290;&#35831;&#27880;&#24847;&#36825;&#20010;&#31867;&#24182;&#27809;&#26377;&#20160;&#20040; <span class="emphasis"><em>&#29305;&#21035;</em></span> &#20043;&#22788;,&#23427;&#21482;&#26159;&#20010;&#26222;&#36890;&#30340;POJO&#65292;&#19981;&#20381;&#36182;&#20110;&#29305;&#27530;&#30340;&#25509;&#21475;&#65292;&#25277;&#35937;&#31867;&#25110;&#32773;&#27880;&#35299;&#12290;</p>
+<pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">class</span> SimpleMovieLister {
+
+    <span class="hl-comment">// the SimpleMovieLister has a dependency on a MovieFinder</span>
+    <span class="hl-keyword">private</span> MovieFinder movieFinder;
+
+    <span class="hl-comment">// a constructor so that the Spring container can inject a MovieFinder</span>
+    <span class="hl-keyword">public</span> SimpleMovieLister(MovieFinder movieFinder) {
+        <span class="hl-keyword">this</span>.movieFinder = movieFinder;
+    }
+
+    <span class="hl-comment">// business logic that actually uses the injected MovieFinder is omitted...</span>
+
+}</pre>
+
+<div class="section"><div class="titlepage"><div><div><h5 class="title"><a name="beans-factory-ctor-arguments-resolution" href="#beans-factory-ctor-arguments-resolution"></a>&#26500;&#36896;&#22120;&#21442;&#25968;&#35299;&#26512;</h5></div></div></div>
+
+<p>&#26500;&#36896;&#22120;&#21442;&#25968;&#36890;&#36807;&#21442;&#25968;&#31867;&#22411;&#36827;&#34892;&#21305;&#37197;&#12290;&#22914;&#26524;&#26500;&#36896;&#22120;&#21442;&#25968;&#30340;&#31867;&#22411;&#23450;&#20041;&#27809;&#26377;&#28508;&#22312;&#30340;&#27495;&#20041;&#65292;&#37027;&#20040;bean&#34987;&#23454;&#20363;&#21270;&#30340;&#26102;&#20505;&#65292;bean&#23450;&#20041;&#20013;&#26500;&#36896;&#22120;&#21442;&#25968;&#30340;&#23450;&#20041;&#39034;&#24207;&#23601;&#26159;&#36825;&#20123;&#21442;&#25968;&#30340;&#39034;&#24207;&#24182;&#20381;&#27425;&#36827;&#34892;&#21305;&#37197;&#12290;&#30475;&#19979;&#38754;&#30340;&#20195;&#30721;&#65306;</p>
+<pre class="programlisting"><span class="hl-keyword">package</span> x.y;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> Foo {
+
+    <span class="hl-keyword">public</span> Foo(Bar bar, Baz baz) {
+        <span class="hl-comment">// ...</span>
+    }
+
+}</pre>
+
+<p>&#19978;&#36848;&#20195;&#30721;&#20013;&#21442;&#25968;&#31867;&#22411;&#23450;&#20041;&#19981;&#23384;&#22312;&#28508;&#22312;&#30340;&#27495;&#20041;&#65292;&#25105;&#20204;&#20551;&#35774;<code class="literal">Bar</code>&#21644;<code class="literal">Baz</code>&#20043;&#38388;&#19981;&#23384;&#22312;&#32487;&#25215;&#20851;&#31995;&#12290;&#22240;&#27492;&#65292;&#19979;&#38754;&#20195;&#30721;&#20013;&#22312;&#20803;&#32032;<code class="literal">&lt;constructor-arg/&gt;</code>&#30340;&#37197;&#32622;&#21363;&#20351;&#27809;&#26377;&#26126;&#30830;&#25351;&#23450;&#26500;&#36896;&#21442;&#25968;&#39034;&#24207;&#25110;&#32773;&#31867;&#22411;&#20063;&#20250;&#36215;&#20316;&#29992;&#12290;</p>
+<pre class="programlisting"><span class="hl-tag">&lt;beans&gt;</span>
+    <span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"foo"</span> <span class="hl-attribute">class</span>=<span class="hl-value">"x.y.Foo"</span><span class="hl-tag">&gt;</span>
+        <span class="hl-tag">&lt;constructor-arg</span> <span class="hl-attribute">ref</span>=<span class="hl-value">"bar"</span><span class="hl-tag">/&gt;</span>
+        <span class="hl-tag">&lt;constructor-arg</span> <span class="hl-attribute">ref</span>=<span class="hl-value">"baz"</span><span class="hl-tag">/&gt;</span>
+    <span class="hl-tag">&lt;/bean&gt;</span>
+
+    <span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"bar"</span> <span class="hl-attribute">class</span>=<span class="hl-value">"x.y.Bar"</span><span class="hl-tag">/&gt;</span>
+
+    <span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"baz"</span> <span class="hl-attribute">class</span>=<span class="hl-value">"x.y.Baz"</span><span class="hl-tag">/&gt;</span>
+<span class="hl-tag">&lt;/beans&gt;</span></pre>
+
+<p>&#24403;&#21478;&#19968;&#20010;bean&#34987;&#24341;&#29992;&#65292;&#23427;&#30340;&#31867;&#22411;&#26159;&#24050;&#30693;&#30340;&#65292;&#24182;&#19988;&#21305;&#37197;&#20063;&#27809;&#38382;&#39064;&#65288;&#36319;&#21069;&#38754;&#30340;&#20363;&#23376;&#19968;&#26679;&#65289;&#12290;&#24403;&#25105;&#20204;&#20351;&#29992;&#31616;&#21333;&#31867;&#22411;&#65292;&#27604;&#22914;<code class="literal">&lt;value&gt;true&lt;/value&gt;</code>&#12290;Spring&#24182;&#19981;&#33021;&#30693;&#36947;&#35813;&#20540;&#30340;&#31867;&#22411;&#65292;&#19981;&#20511;&#21161;&#20854;&#20182;&#24110;&#21161;Spring&#23558;&#19981;&#33021;&#36890;&#36807;&#31867;&#22411;&#36827;&#34892;&#21305;&#37197;&#12290;&#30475;&#19979;&#38754;&#30340;&#31867;&#65306;</p>
+<pre class="programlisting"><span class="hl-keyword">package</span> examples;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> ExampleBean {
+
+    <span class="hl-comment">// Number of years to calculate the Ultimate Answer</span>
+    <span class="hl-keyword">private</span> <span class="hl-keyword">int</span> years;
+
+    <span class="hl-comment">// The Answer to Life, the Universe, and Everything</span>
+    <span class="hl-keyword">private</span> String ultimateAnswer;
+
+    <span class="hl-keyword">public</span> ExampleBean(<span class="hl-keyword">int</span> years, String ultimateAnswer) {
+        <span class="hl-keyword">this</span>.years = years;
+        <span class="hl-keyword">this</span>.ultimateAnswer = ultimateAnswer;
+    }
+
+}</pre>
+
+<p>&#38024;&#23545;&#19978;&#38754;&#30340;&#22330;&#26223;&#21487;&#20197;&#20351;&#29992;<code class="literal">type</code>&#23646;&#24615;&#26469;&#26174;&#24335;&#25351;&#23450;&#37027;&#20123;&#31616;&#21333;&#31867;&#22411;&#37027;&#20010;&#30340;&#26500;&#36896;&#21442;&#25968;&#31867;&#22411;&#65292;&#27604;&#22914;&#65306;</p>
+<pre class="programlisting"><span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"exampleBean"</span> <span class="hl-attribute">class</span>=<span class="hl-value">"examples.ExampleBean"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;constructor-arg</span> <span class="hl-attribute">type</span>=<span class="hl-value">"int"</span> <span class="hl-attribute">value</span>=<span class="hl-value">"7500000"</span><span class="hl-tag">/&gt;</span>
+    <span class="hl-tag">&lt;constructor-arg</span> <span class="hl-attribute">type</span>=<span class="hl-value">"java.lang.String"</span> <span class="hl-attribute">value</span>=<span class="hl-value">"42"</span><span class="hl-tag">/&gt;</span>
+<span class="hl-tag">&lt;/bean&gt;</span></pre>
+
+<p>&#20351;&#29992;<code class="literal">index</code>&#23646;&#24615;&#26469;&#26174;&#24335;&#25351;&#23450;&#26500;&#36896;&#21442;&#25968;&#30340;&#32034;&#24341;&#65292;&#27604;&#22914;&#65306;</p>
+<pre class="programlisting"><span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"exampleBean"</span> <span class="hl-attribute">class</span>=<span class="hl-value">"examples.ExampleBean"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;constructor-arg</span> <span class="hl-attribute">index</span>=<span class="hl-value">"0"</span> <span class="hl-attribute">value</span>=<span class="hl-value">"7500000"</span><span class="hl-tag">/&gt;</span>
+    <span class="hl-tag">&lt;constructor-arg</span> <span class="hl-attribute">index</span>=<span class="hl-value">"1"</span> <span class="hl-attribute">value</span>=<span class="hl-value">"42"</span><span class="hl-tag">/&gt;</span>
+<span class="hl-tag">&lt;/bean&gt;</span></pre>
+
+<p>&#20351;&#29992;&#32034;&#24341;&#21487;&#20197;&#35299;&#20915;&#22810;&#20010;&#31616;&#21333;&#20540;&#30340;&#28151;&#28102;&#65292;&#36824;&#33021;&#35299;&#20915;&#26500;&#36896;&#26041;&#27861;&#26377;&#20004;&#20010;&#30456;&#21516;&#31867;&#22411;&#30340;&#21442;&#25968;&#30340;&#28151;&#28102;&#38382;&#39064;&#65292;&#27880;&#24847;<span class="emphasis"><em>index&#26159;&#20174;0&#24320;&#22987;&#30340;</em></span>&#12290;</p>
+<p>&#20320;&#20063;&#21487;&#20197;&#20351;&#29992;&#26500;&#36896;&#22120;&#21442;&#25968;&#21629;&#21517;&#26469;&#25351;&#23450;&#20540;&#30340;&#31867;&#22411;&#65306;</p>
+<pre class="programlisting"><span class="hl-tag">&lt;bean</span> <span class="hl-attribute">id</span>=<span class="hl-value">"exampleBean"</span> <span class="hl-attribute">class</span>=<span class="hl-value">"examples.ExampleBean"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;constructor-arg</span> <span class="hl-attribute">name</span>=<span class="hl-value">"years"</span> <span class="hl-attribute">value</span>=<span class="hl-value">"7500000"</span><span class="hl-tag">/&gt;</span>
+    <span class="hl-tag">&lt;constructor-arg</span> <span class="hl-attribute">name</span>=<span class="hl-value">"ultimateAnswer"</span> <span class="hl-attribute">value</span>=<span class="hl-value">"42"</span><span class="hl-tag">/&gt;</span>
+<span class="hl-tag">&lt;/bean&gt;</span></pre>
+
+<p>&#35831;&#35760;&#20303;&#20026;&#20102;&#20351;&#36825;&#20010;&#36215;&#20316;&#29992;&#65292;&#20320;&#30340;&#20195;&#30721;&#32534;&#35793;&#26102;&#35201;&#25171;&#24320;&#32534;&#35793;&#27169;&#24335;&#65292;&#36825;&#26679;Spring&#21487;&#20197;&#26816;&#26597;&#26500;&#36896;&#26041;&#27861;&#30340;&#21442;&#25968;&#12290;&#22914;&#26524;&#20320;&#19981;&#25171;&#24320;&#35843;&#35797;&#27169;&#24335;&#65288;&#25110;&#32773;&#19981;&#24819;&#25171;&#24320;&#65289;&#65292;&#20063;&#21487;&#20197;&#20351;&#29992;
+<a class="ulink" href="http://download.oracle.com/javase/6/docs/api/java/beans/ConstructorProperties.html" target="_top">@ConstructorProperties</a>  JDK&#27880;&#35299;&#26126;&#30830;&#25351;&#20986;&#26500;&#36896;&#20989;&#25968;&#30340;&#21442;&#25968;&#12290;&#19979;&#38754;&#26159;&#31616;&#21333;&#30340;&#20363;&#23376;&#65306;</p>
+<pre class="programlisting"><span class="hl-keyword">package</span> examples;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> ExampleBean {
+
+    <span class="hl-comment">// Fields omitted</span>
+
+    <em><span class="hl-annotation" style="color: gray">@ConstructorProperties({"years", "ultim
